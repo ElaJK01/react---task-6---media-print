@@ -1,3 +1,30 @@
+# Assignment - React 6
+
+***
+
+## Configuration steps
+Start off from your React 5 repository - no further steps should be necessary.
+
+## Assignment goal
+
+<details>
+The goal of this assignment is to get familiarized with print media query via a concrete real-world example, as well as honing in problem-solving skills, as specific print targets might take research to achieve.
+</details>
+
+## Formal requirements
+<details>
+
+* data lists should be printable
+* single list items should also be printable
+* styles of lists and items should be adjusted ***when printing*** so that unnecessary elements, such as interactive ones, are hidden
+* size and position of printed items should match the size of the page they will be printed on
+* when printing a list - no other elements should be visible
+* when printing a list item - no other elements should be visible
+* list item print should not print a "full page" version available via "details" button, just the one that exists in a list
+* printing should happen on a button click - for lists as well as list items
+* when submitting your project for review, please describe in 1-2 sentences your choice regarding solving this issue
+</details>
+
 # Assignment - React 5
 
 ***
