@@ -15,6 +15,7 @@ import ContinentDetails from "./pages/continentDetails";
 import { darkTheme, lightTheme } from "./themes";
 import ThemeToggler from "./components/themeToggler";
 import useThemeMode from "./useThemeMode";
+import styled from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -42,7 +43,28 @@ const GlobalStyle = createGlobalStyle`
     body {
       width: 90%;
     }
+}
+  
+  @page {
+    margin: 5px;
+  }
+`;
 
+const PrintableBodyWrapper = styled.div`
+  @media print {
+    nav {
+      display: none;
+    }
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -56,6 +78,7 @@ function App() {
       <ThemeProvider theme={mode}>
         <div>
           <GlobalStyle />
+          <PrintableBodyWrapper>
           <ThemeToggler toggleTheme={themeToggler} theme={theme} />
           <Layout>
             <Switch>
@@ -69,6 +92,7 @@ function App() {
               <Route path="/continents/:code" component={ContinentDetails} />
             </Switch>
           </Layout>
+          </PrintableBodyWrapper>
         </div>
       </ThemeProvider>
     </DndProvider>

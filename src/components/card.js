@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, {useCallback, useRef} from "react";
 import styled from "styled-components";
 import { useDrag, useDrop } from "react-dnd";
 import CardButton from "./cardButton";
+import PrintButton from "./printButton";
+import { useReactToPrint } from 'react-to-print';
 
 const CardContainer = styled.div`
   display: flex;
@@ -13,6 +15,12 @@ const CardContainer = styled.div`
   flex-basis: 30%;
   align-items: center;
   justify-content: center;
+  :active {
+    border: 1px solid blue;
+  }
+  :focus {
+    border: 1px solid deeppink;
+  }
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
     flex-basis: 80%;
@@ -120,7 +128,13 @@ const Card = ({ img, link, color, content, title, id, index, moveCard }) => {
   const opacity = isDragging ? 0 : 1;
   const backgroundColor = isOver ? "lightblue" : "transparent";
   drag(drop(ref));
+
+const handlePrint = useReactToPrint({
+    content: () => ref.current,
+  });
+
   return (
+      <div>
     <CardContainer
       ref={ref}
       style={{ opacity, backgroundColor }}
@@ -132,7 +146,8 @@ const Card = ({ img, link, color, content, title, id, index, moveCard }) => {
         {content}
         <CardButton to={link} />
       </CardContent>
-    </CardContainer>
+      <PrintButton onClick={handlePrint} text="Print Card"></PrintButton>
+    </CardContainer></div>
   );
 };
 

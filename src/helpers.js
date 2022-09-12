@@ -1,5 +1,6 @@
 import { addIndex, curry, map } from "ramda";
 import update from "immutability-helper";
+import React from 'react';
 
 export const mapIndexed = addIndex(map);
 

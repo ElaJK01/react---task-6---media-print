@@ -26,6 +26,11 @@ const SectionText = styled.p`
   display: inline;
   text-align: justify;
   margin: 10px;
+  
+  @media print {
+    display: none;
+    margin-top: 10px;
+  }
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
     margin: 5px;

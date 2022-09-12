@@ -32,6 +32,10 @@ const Button = styled(Link)`
     width: 50%;
     font-size: 0.8rem;
   }
+
+  @media print {
+    display: none;
+  }
 `;
 
 const CardButton = ({ to }) => (

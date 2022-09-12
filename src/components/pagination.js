@@ -15,10 +15,15 @@ const PaginationContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   margin: 5px;
+  margin-top: 25px;
   box-sizing: border-box;
   position: fixed;
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
+    display: none;
+  }
+  
+  @media print {
     display: none;
   }
 `;

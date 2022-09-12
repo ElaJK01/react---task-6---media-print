@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { prop } from "ramda";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {prop} from "ramda";
 import styled from "styled-components";
 import Card from "./card";
-import { mapIndexed, moveElementFn } from "../helpers";
+import {mapIndexed, moveElementFn} from "../helpers";
+import {useReactToPrint} from "react-to-print";
+import PrintButton from "./printButton";
 
 const ListRoot = styled.div`
   display: flex;
@@ -17,42 +19,51 @@ const ListRoot = styled.div`
   border-radius: 5px;
 `;
 
-const LanguagesList = ({ list }) => {
-  const [cards, setCards] = useState(list);
+const LanguagesList = ({list}) => {
+    const [cards, setCards] = useState(list);
 
-  useEffect(() => {
-    setCards(list);
-  }, [list]);
+    useEffect(() => {
+        setCards(list);
+    }, [list]);
 
-  const moveCard = useCallback(moveElementFn(setCards), []);
+    const printRef = useRef()
 
-  const renderCard = useCallback(
-    (card, index) => (
-      <Card
-        key={index}
-        index={index}
-        id={prop("code", card)}
-        title={prop("name", card)}
-        content={
-          <div>
-            <p>
-              Code:
-              {prop("code", card)}
-            </p>
-          </div>
-        }
-        moveCard={moveCard}
-        link={`/languages/${prop("code", card)}`}
-        color="lightgreen"
-      />
-    ),
-    [list]
-  );
-  return (
-    <ListRoot>
-      {cards |> mapIndexed((card, index) => renderCard(card, index))}
-    </ListRoot>
-  );
+    const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
+
+    const moveCard = useCallback(moveElementFn(setCards), []);
+
+    const renderCard = useCallback(
+        (card, index) => (
+            <Card
+                key={index}
+                index={index}
+                id={prop("code", card)}
+                title={prop("name", card)}
+                content={
+                    <div>
+                        <p>
+                            Code:
+                            {prop("code", card)}
+                        </p>
+                    </div>
+                }
+                moveCard={moveCard}
+                link={`/languages/${prop("code", card)}`}
+                color="lightgreen"
+            />
+        ),
+        [list]
+    );
+    return (
+        <div>
+            <PrintButton text="Print page" onClick={handlePrint}/>
+            <ListRoot ref={printRef}>
+                {cards |> mapIndexed((card, index) => renderCard(card, index))}
+            </ListRoot>
+        </div>
+    );
 };
 
 export default LanguagesList;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { path } from "ramda";
 import Section from "../components/section";
 import CONTINENTS_QUERY from "../../API/gqlCalls/getContinents";

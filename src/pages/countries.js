@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { add, length, multiply, path, slice } from "ramda";
 import Pagination from "../components/pagination";
 import CountriesList from "../components/countriesList";
 import COUNTRIES_QUERY from "../../API/gqlCalls/getCountries";
 import Section from "../components/section";
 import withLoadingData from "../withLoadingData";
+import Modal from "../components/modal";
+import PrintButton from "../components/printButton";
 
 const countriesText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -36,6 +38,7 @@ const Countries = withLoadingData((props) => {
   const currentData = currentDataCount();
 
   const handlePaginate = (pageNumber) => setCurrentPage(pageNumber);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -48,9 +51,13 @@ const Countries = withLoadingData((props) => {
             currentPage={currentPage}
             adjacentPages={3}
           />
+          <PrintButton onClick={() => setIsOpen(true)} text="Print full countries list"/>
           <CountriesList list={currentData} />
         </div>
       </Section>
+      <Modal handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <CountriesList list={countriesList}/>
+      </Modal>
     </div>
   );
 }, COUNTRIES_QUERY);
