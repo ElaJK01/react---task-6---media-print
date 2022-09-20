@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { add, length, multiply, path, slice } from "ramda";
 import Pagination from "../components/pagination";
 import CountriesList from "../components/countriesList";
@@ -51,12 +51,15 @@ const Countries = withLoadingData((props) => {
             currentPage={currentPage}
             adjacentPages={3}
           />
-          <PrintButton onClick={() => setIsOpen(true)} text="Print full countries list"/>
+          <PrintButton
+            onClick={() => setIsOpen(true)}
+            text="Print full countries list"
+          />
           <CountriesList list={currentData} />
         </div>
       </Section>
       <Modal handleClose={() => setIsOpen(false)} isOpen={isOpen}>
-        <CountriesList list={countriesList}/>
+        <CountriesList list={countriesList} />
       </Modal>
     </div>
   );

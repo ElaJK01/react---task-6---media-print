@@ -34,7 +34,8 @@ const DetailElement = ({ element, index, moveElement, id }) => {
     <div
       key={index}
       style={{
-        border: "1px solid blue",
+        boxShadow: "0 4 8 0 rgba(0 0 0 0.2)",
+        border: "1px solid lightgray",
         margin: 2,
         background: isDragging ? "pink" : "transparent",
       }}

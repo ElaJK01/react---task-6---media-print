@@ -1,9 +1,9 @@
-import React, {useCallback, useRef} from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useDrag, useDrop } from "react-dnd";
+import { useReactToPrint } from "react-to-print";
 import CardButton from "./cardButton";
 import PrintButton from "./printButton";
-import { useReactToPrint } from 'react-to-print';
 
 const CardContainer = styled.div`
   display: flex;
@@ -15,8 +15,12 @@ const CardContainer = styled.div`
   flex-basis: 30%;
   align-items: center;
   justify-content: center;
+  &:hover {
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.3);
+  }
   :active {
     border: 1px solid blue;
+    box-shadow: 0 4px 8px 2px white;
   }
   :focus {
     border: 1px solid deeppink;
@@ -40,6 +44,15 @@ const CardContainer = styled.div`
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media print {
+    box-shadow: none;
+    border: 1px solid lightgray;
+    break-inside: avoid;
+    width: 80%;
+    margin: 10px auto;
+    justify-content: center;
+  }
 `;
 
 const CardContent = styled.div`
@@ -48,10 +61,13 @@ const CardContent = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
   background-color: whitesmoke;
   color: ${({ theme }) => theme.cardText};
+  &:hover {
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.3);
+  }
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
     flex: 3;
@@ -67,6 +83,9 @@ const ImgContainer = styled.div`
   width: 200px;
   height: 200px;
   background: ${({ color, img }) => (color && !img ? color : !img && !color ? "pink" : img)};
+  &:hover {
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.3);;
+  }
 `;
 
 const CardTitle = styled.h4`
@@ -129,12 +148,11 @@ const Card = ({ img, link, color, content, title, id, index, moveCard }) => {
   const backgroundColor = isOver ? "lightblue" : "transparent";
   drag(drop(ref));
 
-const handlePrint = useReactToPrint({
+  const handlePrint = useReactToPrint({
     content: () => ref.current,
   });
 
   return (
-      <div>
     <CardContainer
       ref={ref}
       style={{ opacity, backgroundColor }}
@@ -146,8 +164,8 @@ const handlePrint = useReactToPrint({
         {content}
         <CardButton to={link} />
       </CardContent>
-      <PrintButton onClick={handlePrint} text="Print Card"></PrintButton>
-    </CardContainer></div>
+      <PrintButton onClick={handlePrint} text="Print Card" />
+    </CardContainer>
   );
 };
 

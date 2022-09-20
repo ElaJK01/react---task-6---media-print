@@ -1,14 +1,15 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ButtonRoot = styled.button`
-  border-radius: 5px;
+  border-radius: 3px;
   background-color: ${({ theme }) => theme.navbarButtonBackground};
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: center;
   padding: 2px 4px 2px 4px;
+  margin: 5px;
   color: ${({ theme }) => theme.text};
   text-decoration: none;
   :hover {
@@ -24,11 +25,10 @@ const ButtonRoot = styled.button`
   @media print {
     display: none;
   }
-`
+`;
 
-const PrintButton = ({onClick, text}) => {
-
-    return (<ButtonRoot onClick={onClick}>{text ? text : "Print"}</ButtonRoot>)
-}
+const PrintButton = ({ onClick, text }) => (
+  <ButtonRoot onClick={onClick}>{text || "Print"}</ButtonRoot>
+);
 
 export default PrintButton;

@@ -5,6 +5,8 @@ import LanguagesList from "../components/languagesList";
 import LANGUAGES_QUERY from "../../API/gqlCalls/getLanguages";
 import Section from "../components/section";
 import withLoadingData from "../withLoadingData";
+import Modal from "../components/modal";
+import PrintButton from "../components/printButton";
 
 const languagesText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -36,6 +38,7 @@ const Languages = withLoadingData((props) => {
   const currentData = currentDataCount();
 
   const handlePaginate = (pageNumber) => setCurrentPage(pageNumber);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -48,9 +51,16 @@ const Languages = withLoadingData((props) => {
             currentPage={currentPage}
             adjacentPages={3}
           />
+          <PrintButton
+            onClick={() => setIsOpen(true)}
+            text="Print full languages list"
+          />
           <LanguagesList list={currentData} />
         </div>
       </Section>
+      <Modal handleClose={() => setIsOpen(false)} isOpen={isOpen}>
+        <LanguagesList list={languagesList} />
+      </Modal>
     </div>
   );
 }, LANGUAGES_QUERY);

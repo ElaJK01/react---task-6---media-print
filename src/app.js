@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import Home from "./pages/home";
@@ -15,7 +15,6 @@ import ContinentDetails from "./pages/continentDetails";
 import { darkTheme, lightTheme } from "./themes";
 import ThemeToggler from "./components/themeToggler";
 import useThemeMode from "./useThemeMode";
-import styled from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -33,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.text};
     transition: all 0.50s linear;
     font-size: 14px;
-  }
+}
 
   p {
     font-size: 12px;
@@ -46,13 +45,13 @@ const GlobalStyle = createGlobalStyle`
 }
   
   @page {
-    margin: 5px;
-  }
+    margin: 10px;
+ }
 `;
 
 const PrintableBodyWrapper = styled.div`
   @media print {
-    nav {
+    nav footer {
       display: none;
     }
 
@@ -79,19 +78,19 @@ function App() {
         <div>
           <GlobalStyle />
           <PrintableBodyWrapper>
-          <ThemeToggler toggleTheme={themeToggler} theme={theme} />
-          <Layout>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/contact" component={Contact} />
-              <Route exact path="/countries" component={Countries} />
-              <Route exact path="/languages" component={Languages} />
-              <Route path="/languages/:code" component={LanguageDetails} />
-              <Route path="/countries/:code" component={CountryDetails} />
-              <Route path="/continents/:code" component={ContinentDetails} />
-            </Switch>
-          </Layout>
+            <ThemeToggler toggleTheme={themeToggler} theme={theme} />
+            <Layout>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/contact" component={Contact} />
+                <Route exact path="/countries" component={Countries} />
+                <Route exact path="/languages" component={Languages} />
+                <Route path="/languages/:code" component={LanguageDetails} />
+                <Route path="/countries/:code" component={CountryDetails} />
+                <Route path="/continents/:code" component={ContinentDetails} />
+              </Switch>
+            </Layout>
           </PrintableBodyWrapper>
         </div>
       </ThemeProvider>

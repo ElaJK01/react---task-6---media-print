@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import DetailElement from "./detailElement";
 import { mapIndexed, moveElementFn } from "../helpers";
 
-const ContinentContainer = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,9 +27,9 @@ const DetailsList = ({ list }) => {
   );
 
   return (
-    <ContinentContainer>
+    <Container>
       {items |> mapIndexed((item, index) => renderElement(item, index))}
-    </ContinentContainer>
+    </Container>
   );
 };
 
