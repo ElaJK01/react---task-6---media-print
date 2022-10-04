@@ -1,6 +1,6 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import {useReactToPrint} from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import PrintButton from "./printButton";
 
 const Root = styled.div`
@@ -25,20 +25,20 @@ const Root = styled.div`
   }
 `;
 
-const ListContainer = ({children}) => {
-    const printRef = useRef();
+const ListContainer = ({ children }) => {
+  const printRef = useRef();
 
-    const handlePrint = useReactToPrint({
-        content: () => printRef.current,
-        removeAfterPrint: true,
-    });
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    removeAfterPrint: true,
+  });
 
-    return (
-        <div id="listWrapper">
-            <PrintButton text="Print page" onClick={handlePrint}/>
-            <Root ref={printRef}>{children}</Root>
-        </div>
-    );
+  return (
+    <div id="listWrapper">
+      <PrintButton text="Print page" onClick={handlePrint} />
+      <Root ref={printRef}>{children}</Root>
+    </div>
+  );
 };
 
 export default ListContainer;

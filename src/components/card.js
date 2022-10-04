@@ -1,7 +1,7 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import {useDrag, useDrop} from "react-dnd";
-import {useReactToPrint} from "react-to-print";
+import { useDrag, useDrop } from "react-dnd";
+import { useReactToPrint } from "react-to-print";
 import CardButton from "./cardButton";
 import PrintButton from "./printButton";
 
@@ -97,7 +97,7 @@ const CardContent = styled.div`
   margin-right: 5px;
   margin-left: 5px;
   background-color: whitesmoke;
-  color: ${({theme}) => theme.cardText};
+  color: ${({ theme }) => theme.cardText};
 
   &:hover {
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.3);
@@ -116,10 +116,11 @@ const ImgContainer = styled.div`
   margin: 10px;
   width: 200px;
   height: 200px;
-  background: ${({color, img}) => (color && !img ? color : !img && !color ? "pink" : img)};
+  background: ${({ color, img }) =>
+    color && !img ? color : !img && !color ? "pink" : img};
 
   &:hover {
-    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.3);;
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.3);
   }
 `;
 
@@ -138,81 +139,84 @@ const CardTitle = styled.h4`
   }
 `;
 
-const Card = ({img, link, color, content, title, id, index, moveCard}) => {
-    const ref = useRef(null);
+const Card = ({ img, link, color, content, title, id, index, moveCard }) => {
+  const ref = useRef(null);
 
-    const [{handlerId, isOver}, drop] = useDrop({
-        accept: "card",
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-                isOver: monitor.isOver(),
-            };
-        },
-        hover(item, monitor) {
-            if (!ref.current) {
-                return;
-            }
-            const dragIndex = item.index;
-            const hoverIndex = index;
-            if (dragIndex === hoverIndex) {
-                return;
-            }
-            const hoverBoundingRect = ref.current.getBoundingClientRect();
-            const hoverMiddleY =
-                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
-            }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-            moveCard(dragIndex, hoverIndex);
-            item.index = hoverIndex;
-        },
-    });
-    const [{isDragging}, drag] = useDrag({
-        type: "card",
-        item: () => ({id, index}),
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
-    const opacity = isDragging ? 0 : 1;
-    const backgroundColor = isOver ? "lightblue" : "transparent";
-    drag(drop(ref));
-
-    const handlePrint = useReactToPrint({
-        content: () => ref.current,
-        removeAfterPrint: true,
-        documentTitle: window.document.title,
-        onBeforeGetContent: () => {
-            const pageTitle = document.createElement('h2')
-         pageTitle.innerHTML =`Title: ${title} card`
-        return ref.current.prepend(pageTitle)
+  const [{ handlerId, isOver }, drop] = useDrop({
+    accept: "card",
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+        isOver: monitor.isOver(),
+      };
     },
-        onAfterPrint: () => {
-            const titleToRemove = document.getElementsByTagName('h2')
-            return ref.current.remove(titleToRemove)
-        }
-    })
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      const hoverBoundingRect = ref.current.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      moveCard(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+  const [{ isDragging }, drag] = useDrag({
+    type: "card",
+    item: () => ({ id, index }),
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  const opacity = isDragging ? 0 : 1;
+  const backgroundColor = isOver ? "lightblue" : "transparent";
+  drag(drop(ref));
 
-    return (
-        <CardWrapper ref={ref} style={{opacity, backgroundColor}}
-                     data-handler-id={handlerId}>
-            <CardContainer>
-                <ImgContainer color={color} img={img}/>
-                <CardContent>
-                    <CardTitle>{title}</CardTitle>
-                    {content}
-                    <CardButton to={link}/>
-                </CardContent>
-                <PrintButton onClick={handlePrint} text="Print Card"/>
-            </CardContainer>
-        </CardWrapper>
-    );
+  const handlePrint = useReactToPrint({
+    content: () => ref.current,
+    removeAfterPrint: true,
+    documentTitle: window.document.title,
+    onBeforeGetContent: () => {
+      const pageTitle = document.createElement("h2");
+      pageTitle.innerHTML = `Title: ${title} card`;
+      return ref.current.prepend(pageTitle);
+    },
+    onAfterPrint: () => {
+      const titleToRemove = document.getElementsByTagName("h2");
+      return ref.current.remove(titleToRemove);
+    },
+  });
+
+  return (
+    <CardWrapper
+      ref={ref}
+      style={{ opacity, backgroundColor }}
+      data-handler-id={handlerId}
+    >
+      <CardContainer>
+        <ImgContainer color={color} img={img} />
+        <CardContent>
+          <CardTitle>{title}</CardTitle>
+          {content}
+          <CardButton to={link} />
+        </CardContent>
+        <PrintButton onClick={handlePrint} text="Print Card" />
+      </CardContainer>
+    </CardWrapper>
+  );
 };
 
 export default Card;

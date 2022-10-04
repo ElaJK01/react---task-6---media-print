@@ -28,6 +28,7 @@ module.exports = {
     "import/no-named-as-default-member": 0,
     "consistent-return": 0,
     "no-unused-expressions": 0,
+    "no-nested-ternary": 0,
   },
   parser: "@babel/eslint-parser",
   ignorePatterns: ["graphql.tsx"],

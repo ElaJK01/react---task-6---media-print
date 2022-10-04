@@ -22,7 +22,7 @@ const PaginationContainer = styled.div`
   @media screen and (min-width: 320px) and (max-width: 768px) {
     display: none;
   }
-  
+
   @media print {
     display: none;
   }

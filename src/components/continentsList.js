@@ -36,7 +36,7 @@ const ContinentsList = ({ list }) => {
 
   return (
     <ListContainer>
-        <ToPrintTitle title={'Title: Continents list'}/>
+      <ToPrintTitle title="Title: Continents list" />
       {cards |> mapIndexed((card, i) => renderCard(card, i))}
     </ListContainer>
   );

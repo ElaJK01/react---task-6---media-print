@@ -26,7 +26,7 @@ const SectionText = styled.p`
   display: inline;
   text-align: justify;
   margin: 10px;
-  
+
   @media print {
     display: none;
     margin-top: 10px;
