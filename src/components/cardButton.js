@@ -14,6 +14,7 @@ const Button = styled(Link)`
   justify-content: center;
   align-items: center;
   display: flex;
+  padding: 5px;
   :hover {
     background: ${({ theme }) => theme.cardBtnHover};
     color: ${({ theme }) => theme.text};

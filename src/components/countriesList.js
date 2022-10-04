@@ -3,6 +3,7 @@ import { prop } from "ramda";
 import Card from "./card";
 import { mapIndexed, moveElementFn } from "../helpers";
 import ListContainer from "./listContainer";
+import ToPrintTitle from "./toPrintTitle";
 
 const CountriesList = ({ list }) => {
   const [cards, setCards] = useState(list);
@@ -50,6 +51,7 @@ const CountriesList = ({ list }) => {
 
   return (
     <ListContainer>
+      <ToPrintTitle title={"Title: Countries list"} />
       {cards |> mapIndexed((card, index) => renderCard(card, index))}
     </ListContainer>
   );

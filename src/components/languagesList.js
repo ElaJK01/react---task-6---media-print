@@ -1,8 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { prop } from "ramda";
+import styled from "styled-components";
 import Card from "./card";
 import { mapIndexed, moveElementFn } from "../helpers";
 import ListContainer from "./listContainer";
+import ToPrintTitle from "./toPrintTitle";
+
+// const ToPrint = styled.h1`
+//   display: none;
+//
+//   @media print {
+//     display: block;
+//     text-align: center;
+//   }
+// `;
 
 const LanguagesList = ({ list }) => {
   const [cards, setCards] = useState(list);
@@ -37,6 +48,7 @@ const LanguagesList = ({ list }) => {
   );
   return (
     <ListContainer>
+      <ToPrintTitle title={"Title: Languages list"} />
       {cards |> mapIndexed((card, index) => renderCard(card, index))}
     </ListContainer>
   );
